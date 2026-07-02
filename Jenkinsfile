@@ -131,15 +131,23 @@ pipeline {
         
         stage('Update Kubernetes Manifests') {
             steps {
-                script {
-                    update_k8s_manifests(
-                        imageTag: env.DOCKER_IMAGE_TAG,
-                        manifestsPath: 'kubernetes',
-                        gitCredentials: 'github-credentials',
-                        gitUserName: 'Jenkins CI',
-                        gitUserEmail: 'jenkins@ci.local'
-                    )
-                }
+                    echo "Updating Kubernetes manifests with image tag: ${env.DOCKER_IMAGE_TAG}"
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        sh """
+                            git config user.name "Jenkins CI"
+                            git config user.email "jenkins@ci.local"
+                            
+                            # Update deployment image
+                            sed -i "s|image: ${env.DOCKER_IMAGE_NAME}:.*|image: ${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_TAG}|g" kubernetes/08-gigashop-deployment.yaml
+                            
+                            # Update migration job image
+                            sed -i "s|image: ${env.DOCKER_MIGRATION_IMAGE_NAME}:.*|image: ${env.DOCKER_MIGRATION_IMAGE_NAME}:${env.DOCKER_IMAGE_TAG}|g" kubernetes/12-migration-job.yaml
+                            
+                            git add kubernetes/08-gigashop-deployment.yaml kubernetes/12-migration-job.yaml
+                            git commit -m "Jenkins automatically updated K8s manifests to tag \${DOCKER_IMAGE_TAG}" || echo "No changes to commit"
+                            git push https://\${GIT_USERNAME}:\${GIT_PASSWORD}@github.com/anuragstark/gigashop.git HEAD:main
+                        """
+                    }
             }
         }
     }
