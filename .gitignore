@@ -93,3 +93,7 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 gigashop-key.pub
 gigashop-key
+
+.Docs
+/Docs
+/docs
