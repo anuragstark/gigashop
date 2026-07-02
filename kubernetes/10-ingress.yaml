@@ -5,28 +5,10 @@ metadata:
   namespace: gigashop
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: '50m'
-    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
-    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
 spec:
   ingressClassName: nginx
-  tls:
-  - hosts:
-    - gigashop.ishwarrugs.shop
-    - ishwarrugs.shop
-    secretName: gigashop-tls
   rules:
-  - host: gigashop.ishwarrugs.shop
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: gigashop-service
-            port:
-              number: 80
-  - host: ishwarrugs.shop
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
