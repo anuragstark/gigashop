@@ -4,12 +4,12 @@ pipeline {
     agent any
     
     environment {
-        // Updated image names for QBShop project (DEV)
-        DOCKER_IMAGE_NAME = 'anuragstark/qbshop-app'
-        DOCKER_MIGRATION_IMAGE_NAME = 'anuragstark/qbshop-migration'
+        // Updated image names for GigaShop project
+        DOCKER_IMAGE_NAME = 'anuragstark/gigashop-app'
+        DOCKER_MIGRATION_IMAGE_NAME = 'anuragstark/gigashop-migration'
         DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
         GITHUB_CREDENTIALS = credentials('github-credentials')
-        GIT_BRANCH = "dev"
+        GIT_BRANCH = "main"
     }
     
     stages {
@@ -25,7 +25,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    clone("https://github.com/anuragstark/GigaShop.git", "dev")
+                    clone("https://github.com/anuragstark/gigashop.git", "main")
                 }
             }
         }
