@@ -218,12 +218,12 @@ sudo systemctl status jenkins
 	
 #### 7. Setup Pipeline<br/>
 > - Create New Pipeline Job<br/>
->   - **Name:** qbShop<br/>
+>   - **Name:** GigaShop<br/>
 >   - **Type:** Pipeline<br/>
 > Press `Okey`<br/>
 
 > > In **General**<br/>
-> > - **Description:** qbShop<br/>
+> > - **Description:** GigaShop<br/>
 > > - **Check the box:** `GitHub project`<br/>
 > > - **GitHub Repo URL:** `https://github.com/<your user-name/gigashop-app`<br/>
 >
@@ -421,13 +421,13 @@ kubectl get svc nginx-ingress-ingress-nginx-controller -n ingress-nginx -o jsonp
 > > apiVersion: v1
 > > kind: ConfigMap
 > > metadata:
-> >   name: qbshop-config
-> >   namespace: qbshop
+> >   name: gigashop-config
+> >   namespace: gigashop
 > > data:
 > >   MONGODB_URI: "mongodb://mongodb-service:27017/easyshop"
 > >   NODE_ENV: "production"
-> >   NEXT_PUBLIC_API_URL: "https://qbshop.asriv.shop/api"
-> >   NEXTAUTH_URL: "https://qbshop.asriv.shop/"
+> >   NEXT_PUBLIC_API_URL: "https://gigashop.com/api"
+> >   NEXTAUTH_URL: "https://gigashop.com/"
 > >   NEXTAUTH_SECRET: "HmaFjYZ2jbUK7Ef+wZrBiJei4ZNGBAJ5IdiOGAyQegw="
 > >   JWT_SECRET: "e5e425764a34a2117ec2028bd53d6f1388e7b90aeae9fa7735f2469ea3a6cc8c"
 > > ```
@@ -438,8 +438,8 @@ kubectl get svc nginx-ingress-ingress-nginx-controller -n ingress-nginx -o jsonp
 > > apiVersion: networking.k8s.io/v1
 > > kind: Ingress
 > > metadata:
-> >   name: qbshop-ingress
-> >   namespace: qbshop
+> >   name: gigashop-ingress
+> >   namespace: gigashop
 > >   annotations:
 > >     nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 > >     kubernetes.io/ingress.class: "nginx"
@@ -448,17 +448,17 @@ kubectl get svc nginx-ingress-ingress-nginx-controller -n ingress-nginx -o jsonp
 > > spec:
 > >   tls:
 > >   - hosts:
-> >     - qbshop.asriv.shop
-> >     secretName: qbshop-tls
+> >     - gigashop.com
+> >     secretName: gigashop-tls
 > >   rules:
-> >   - host: qbshop.asriv.shop
+> >   - host: gigashop.com
 > >     http:
 > >       paths:
 > >       - path: /
 > >         pathType: Prefix
 > >         backend:
 > >           service:
-> >             name: qbshop-service
+> >             name: gigashop-service
 > >             port:
 > >               number: 80
 > > ```
@@ -473,11 +473,11 @@ kubectl get svc nginx-ingress-ingress-nginx-controller -n ingress-nginx -o jsonp
 > #### 4. **Commands to check the status:**
 >
 >> ```bash
->> kubectl get certificate -n qbshop
+>> kubectl get certificate -n gigashop
 >> ```
-
+>
 >> ```bash
->> kubectl describe certificate qbshop-tls -n qbshop
+>> kubectl describe certificate gigashop-tls -n gigashop
 >> ```
 >
 >> ```bash
@@ -485,13 +485,35 @@ kubectl get svc nginx-ingress-ingress-nginx-controller -n ingress-nginx -o jsonp
 >> ```
 >
 >> ```bash
->> kubectl get challenges -n qbshop
+>> kubectl get challenges -n gigashop
 >> ```
 >
 >> ```bash
->> kubectl describe challenges -n qbshop
+>> kubectl describe challenges -n gigashop
 >> ```
 
 ## **Congratulations!** <br/>
 
 ### Your project is now deployed.
+
+---
+
+## 🎉 Deployment Success Showcase
+
+Here is the **GigaShop** application running live on the AWS EKS LoadBalancer:
+![GigaShop Live Website](./Screenshots/main_app.png)
+![GigaShop Dashboard](./Screenshots/main_app1.png)
+
+Here is the Jenkins CI/CD Pipeline successfully automating the deployment:
+![Jenkins Dashboard](./Screenshots/jenkins%20dashboard.png)
+![Jenkins Pipeline](./Screenshots/jenkins%20pipeline%20overview.png)
+
+And here is the ArgoCD infrastructure successfully synced and deployed:
+![ArgoCD Sync Status](./Screenshots/agrocd%20dashboard.png)
+
+---
+
+## 👨‍💻 Author
+
+**Anurag Stark**  
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/anuragstark/)
