@@ -36,6 +36,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
+        storageClassName: ""
       #  storageClassName: gp2   # AWS EBS storage class
         resources:
           requests:
