@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: qbshop
+  name: gigashop
   labels:
-    name: qbshop
+    name: gigashop
     environment: production

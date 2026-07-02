@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongodb
-  namespace: qbshop
+  namespace: gigashop
 spec:
   serviceName: mongodb-service
   replicas: 1

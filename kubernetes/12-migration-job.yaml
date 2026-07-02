@@ -2,13 +2,13 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: db-migration
-  namespace: qbshop
+  namespace: gigashop
 spec:
   template:
     spec:
       containers:
       - name: qbs-migration
-        image: anuragstark/qbshop-migration:4
+        image: anuragstark/gigashop-migration:4
         imagePullPolicy: Always
         env:
         - name: MONGODB_URI

@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: qbshop-ingress
-  namespace: qbshop
+  name: gigashop-ingress
+  namespace: gigashop
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: '50m'
     cert-manager.io/cluster-issuer: 'letsencrypt-prod'
@@ -11,18 +11,18 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - qbshop.ishwarrugs.shop
+    - gigashop.ishwarrugs.shop
     - ishwarrugs.shop
-    secretName: qbshop-tls
+    secretName: gigashop-tls
   rules:
-  - host: qbshop.ishwarrugs.shop
+  - host: gigashop.ishwarrugs.shop
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: qbshop-service
+            name: gigashop-service
             port:
               number: 80
   - host: ishwarrugs.shop
@@ -32,6 +32,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: qbshop-service
+            name: gigashop-service
             port:
               number: 80
